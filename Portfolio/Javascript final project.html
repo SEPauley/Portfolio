@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2022.1">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+    span.Apple-tab-span {white-space:pre}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="utf-8" /&gt;</p>
+<p class="p1">&lt;title&gt;Add an icon to the map&lt;/title&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" /&gt;</p>
+<p class="p1">&lt;script src="http://sisltweb.missouri.edu/cs-edu/js/exif.js"&gt;&lt;/script&gt;</p>
+<p class="p1">&lt;script src="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js"&gt;&lt;/script&gt;</p>
+<p class="p1">&lt;link href="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css" rel="stylesheet" /&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">body { margin: 0; padding: 0; }</p>
+<p class="p1">#mapContainer { position: absolute; top: 0; bottom: 0; width: 100%; }</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="mapContainer"&gt;&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">  </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>//This section sets up Mapbox</p>
+<p class="p1"><span class="Apple-converted-space">    </span>mapboxgl.accessToken = "pk.eyJ1Ijoic3BhdWxleSIsImEiOiJjbDVzdnl2dzgwOXA3M2NueHk0ZGd5NHJhIn0.2sgK-hG-voKYLyiaASVSZw"</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var map = new mapboxgl.Map({</p>
+<p class="p1"><span class="Apple-converted-space">      </span>container: "mapContainer", // this must match the id of a `div` on the page</p>
+<p class="p1"><span class="Apple-converted-space">      </span>style: 'mapbox://styles/mapbox/streets-v11',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>center: [-92.3300, 38.9448], // latitude, longitude</p>
+<p class="p1"><span class="Apple-converted-space">      </span>zoom: 16</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>//This provide image urls</p>
+<p class="p1"><span class="Apple-tab-span">	</span>var imageUrls = [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"http://sisltweb.missouri.edu/cs-edu/images/memorial-union-002-sm.jpg",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"http://sisltweb.missouri.edu/cs-edu/images/quad-columns-sm.jpg",</p>
+<p class="p1"><span class="Apple-converted-space">        </span>"http://sisltweb.missouri.edu/cs-edu/images/tiger-plaza-snow-sm.jpg",</p>
+<p class="p1"><span class="Apple-tab-span">	</span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>//This section converts the latitude from an array to a decimal</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function latitudeToDecimal(lat, latRef) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>var lat1 = lat[0] + (lat[1]/60) + (lat[2]/3600);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (latRef == "S") {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>lat1 = lat1 * -1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return lat1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>//This section converts the longitude from an array to a deciaml</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function longitudeToDecimal (lon, lonRef) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>var lon1 = lon[0] + (lon[1]/60) + (lon[2]/3600);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (lonRef == "W") {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>lon1 = lon1 * -1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return lon1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>//This section creates a new id for each image when you loop through the image urls</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var id = 0;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function newId(){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>id += 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return id.toString();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>map.on('load', function() {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>//The for loop is repeated for the length of the image urls list</p>
+<p class="p1"><span class="Apple-converted-space">        </span>//We iterate through all three images</p>
+<p class="p1"><span class="Apple-converted-space">        </span>for (var i = 0; i &lt; imageUrls.length; ++i) {</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>//the variable imageUrl equal whatever element of the variable imageUrls we are currently on</p>
+<p class="p1"><span class="Apple-converted-space">            </span>//this works because imageUrls is an index</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let imageUrl = imageUrls[i];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>let image = new Image();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>image.src = imageUrl;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>image.onload = function(){</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>EXIF.getData(image, function(){</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>//This is where we get the EXIF data for each image</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>let lat = EXIF.getTag(this, "GPSLatitude");</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>let latRef = EXIF.getTag(this, "GPSLatitudeRef"); //get latitude Reference - N or S</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>let lon = EXIF.getTag(this, "GPSLongitude");</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>let lonRef = EXIF.getTag(this, "GPSLongitudeRef"); //get longitude Reference - E or W</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>//latitude and longitude will be rewritten as decimals using the earlier function</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>let latDec = latitudeToDecimal(lat,latRef);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>let lonDec = longitudeToDecimal(lon,lonRef);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>map.loadImage(imageUrl, function(error, image){</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>//for the image, layer, and source, we used the newId function</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>//we are creating a new string for each new image in the loop</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>//that strings are then used to place the images on the map</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>let imageId = newId();</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>let layerId = newId();</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>let sourceId = newId();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>map.addImage(imageId, image);</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>map.addSource(sourceId, {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>"type": "geojson",</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>"data": {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>"type": "Feature",</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>"geometry": {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>"type": "Point",</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>"coordinates": [lonDec, latDec] //on Mapbox, longitude comes before latitude!</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>map.addLayer({</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>"id": layerId,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>"type": "symbol",</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>"source": sourceId,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>"layout": {</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>"icon-image": imageId,</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>"icon-size": 0.5,</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
